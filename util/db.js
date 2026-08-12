@@ -3,9 +3,7 @@ const { DATABASE_URL } = require("./config");
 const { Umzug, SequelizeStorage } = require("umzug");
 
 const sequelize = new Sequelize(
-  process.env.TESTING === "true"
-    ? process.env.TEST_DATABASE_URL
-    : process.env.DATABASE_URL,
+  DATABASE_URL,
   {
     dialect: "postgres",
     logging: false,
