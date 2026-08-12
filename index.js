@@ -1,6 +1,8 @@
 const express = require("express");
 const loginRouter = require("./controllers/login");
 const authorsRouter = require("./controllers/authors");
+const readinglistsRouter = require("./controllers/readinglists");
+const logoutRouter = require("./controllers/logout");
 
 const app = express();
 
@@ -21,10 +23,14 @@ app.use("/api/blogs", blogsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/authors", authorsRouter);
+app.use("/api/readinglists", readinglistsRouter);
+app.use("/api/logout", logoutRouter);
 
 app.post("/api/reset", async (req, res, next) => {
   try {
-    await sequelize.query("TRUNCATE TABLE blogs, users RESTART IDENTITY CASCADE");
+    await sequelize.query(
+      "TRUNCATE TABLE sessions, reading_lists, blogs, users RESTART IDENTITY CASCADE",
+    );
     res.status(204).end();
   } catch (error) {
     next(error);
